@@ -25,6 +25,12 @@
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='bootstrap/img/apple-touch-icon-114-precomposed.png') }}">
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='bootstrap/img/apple-touch-icon-72-precomposed.png') }}">
 	<link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='bootstrap/img/apple-touch-icon-57-precomposed.png') }}">
+	<style type="text/css" media="all">
+	  input,
+	  textarea {
+		width: 230px;
+	  }
+	</style>
   </head>
 
   <body>
@@ -47,6 +53,29 @@
       <!-- Main hero unit for a primary marketing message or call to action -->
 	  <div class="hero-unit" style="overflow: auto; white-space: nowrap; height: 50%;">
 		<div class="row">
+		  <form class="form-horizontal" accept-charset="utf-8" method="post" action="/submit">
+			<div class="control-group">
+			  <label class="control-label" for="name">Name</label>
+			  <div class="controls">
+				<input type="text" name="_name" id="name" placeholder="Firstname Lastname" />
+			  </div>
+			</div>
+			<div class="control-group">
+			  <label class="control-label" for="email">Email</label>
+			  <div class="controls">
+				<input type="text" name="_email" id="email" placeholder="youremail@domain.com" />
+			  </div>
+			</div>
+			<div class="control-group">
+			  <label class="control-label" for="about">About You</label>
+			  <div class="controls">
+				<textarea name="_about" id="about" placeholder="What kind of gifts would you like?"></textarea>
+				<br />
+				<br />
+				<button type="submit" class="btn btn-success">Submit</button>
+			  </div>
+			</div>
+		  </form>
 		</div>
       </div>
 
