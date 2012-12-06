@@ -25,3 +25,5 @@ def post_data():
 def naughty_page():
 	return render_template('naughty.html')
 
+if __name__ == '__main__':
+	app.run(host='0.0.0.0')
