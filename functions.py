@@ -1,8 +1,8 @@
 import pymongo
-import sendgrid
+#import sendgrid
 import random
 
-connection = pymongo.Connection()
+connection = pymongo.Connection('mongodb://santa:balls@linus.mongohq.com:10040/secret_santa')
 db = connection.secret_santa
 collection = db.gift_givers
 
