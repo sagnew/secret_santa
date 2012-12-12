@@ -21,6 +21,10 @@ def post_data():
 	except MultipleUserException:
 		return redirect('/naughty', 301)
 
+@app.route('/success')
+def sucess_page():
+	return render_template('success.html')
+
 @app.route('/naughty')
 def naughty_page():
 	return render_template('naughty.html')

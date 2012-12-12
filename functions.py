@@ -23,7 +23,7 @@ def insert_into_db(name, about, email):
 				"random number": random_number()
 				}
 	#Only insert if the user is not already in the collection
-	if collection.find({"name": name, "email": email}).count() == 0:
+	if collection.find({"name": name}).count() == 0 and collection.find({"email": email}).count() == 0:
 		collection.insert(post)
 	else:
 		naughty_list.insert(post)
