@@ -1,8 +1,9 @@
+import smtplib
 import pymongo
 #import sendgrid
 import random
 
-connection = pymongo.Connection('mongodb://santa:balls@linus.mongohq.com:10040/secret_santa')
+connection = pymongo.Connection('')
 db = connection.secret_santa
 collection = db.gift_givers
 
@@ -38,19 +39,40 @@ def pair_users():
 	#Pairs users randomly with each other
 	
 	users = []
-	paired = ""
-	#This is retarded, and my brain is not working
-	#Note to self out of laziness:
 	#Because the collection is sorted in a random order, I will take each person,
 	#and pair them up with the next person in the collection. The last person will 
 	#be paired with the first. This way, there will be no repeats. 
-	for item in collection.find().sort("random number", 1):
-		users.append(item)
-		
+	
+	#Variables I am using for control flow. There is probably a more elegant way to do this.
+	first_flag = 1
+	previous = ""
+	first_user = ""
+	
+	for user in collection.find().sort("random number", 1):
+		if first_flag == 1:
+			first_flag = 0
+			first_user = user
+			previous = user
+		else:
+			#send_email(previous["email"], previous["name"], user["name"], user["about"], user["email"])
+			print "Giver: " + previous["name"] + " taker: " + user["name"]
+			previous = user
 
-def send_email(recipient, name, about, email):
-	#Do this later with sendgrid
-	return
+	#send_email(previous["email"], previous["name"], first_user["name"], first_user["about"], first_user["email"])
+	print "Giver: " + previous["name"] + " taker: " + first_user["name"]
 
-for user in collection.find():
-	print user
+def send_email(recipient, name_of_recipient, name, about, email):	
+	#Sends an email
+	from_user = 'ajes.ru@gmail.com'  
+	msg = 'Dear ' + name_of_recipient + ',\n\n' + 'Your assignment for the USACS Secret Santa event is ' + name + '. Here is what ' + name + ' had to say: \n\n' + about + '\n\n ' + name + '\'s email address in case you need it: ' + email 
+	subject = "Subject: %s\r\n"%("USACS Secret Santa results!")	
+
+	username = ''  
+	password = ''  
+	  
+	# The actual mail send  
+	server = smtplib.SMTP('smtp.gmail.com:587')  
+	server.starttls()  
+	server.login(username,password)  
+	server.sendmail(from_user, recipient, subject+msg)  
+	server.quit()  
